@@ -1,6 +1,6 @@
 import React from "react";
 import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, Icon, Radio, Select } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Icon, Select } from 'semantic-ui-react';
 
 const options = [
 	{ key: 'RO', text: 'RO', value: 'RO' },
@@ -60,6 +60,8 @@ class FormEntregador extends React.Component{
                                         width={10}
 										label='Nome'
 										maxLength="100"
+										value={this.state.nome}
+										onChange={e => this.setState({nome: e.target.value})}
 									/>
 
 									<Form.Input
@@ -68,7 +70,10 @@ class FormEntregador extends React.Component{
                                         width={5}
 										label='CPF'>
 										<InputMask 
-										mask="999.999.999-99"/> 
+										mask="999.999.999-99"
+										value={this.state.cpf}
+										onChange={e => this.setState({cpf: e.target.value})}
+										/> 
 									</Form.Input>
 
                                     <Form.Input
@@ -76,7 +81,10 @@ class FormEntregador extends React.Component{
                                         width={5}
 										label='RG'>
 										<InputMask 
-										mask="9999999"/> 
+										mask="9999999"
+										value={this.state.rg}
+										onChange={e => this.setState({rg: e.target.value})}
+										/> 
 									</Form.Input>
 
 								</Form.Group>
@@ -92,6 +100,8 @@ class FormEntregador extends React.Component{
                                             mask="99/99/9999" 
                                             maskChar={null}
                                             placeholder="Ex: 20/03/1985"
+											value={this.state.dataNascimento}
+											onChange={e => this.setState({dataNascimento: e.target.value})}
                                         /> 
                                     </Form.Input>
                                     
@@ -101,7 +111,10 @@ class FormEntregador extends React.Component{
 										label='Fone Celular'
                                         width={4}>
 										<InputMask 
-										mask="(99) 9999.9999" /> 
+										mask="(99) 9999.9999"
+										value={this.state.foneCelular}
+										onChange={e => this.setState({foneCelular: e.target.value})}
+										 /> 
 									</Form.Input>
 
 									<Form.Input
@@ -109,18 +122,27 @@ class FormEntregador extends React.Component{
 										label='Fone Fixo'
                                         width={4}>
 										<InputMask 
-										mask="(99) 9999.9999" /> 
+										mask="(99) 9999.9999"
+										value={this.state.foneFixo}
+										onChange={e => this.setState({foneFixo: e.target.value})}
+										 /> 
 									</Form.Input>
 
                                     <Form.Input
 										fluid
 										label='QTD Entregas Realizadas'
-                                        width={3}/>
+                                        width={3}
+										value={this.state.qtdEntregasRealizadas}
+										onChange={e => this.setState({qtdEntregasRealizadas: e.target.value})}
+										/>
 
                                     <Form.Input
 										fluid
 										label='Valor por Frete'
-                                        width={3}/>
+                                        width={3}
+										value={this.state.valorFrete}
+										onChange={e => this.setState({valorFrete: e.target.value})}
+										/>
 
 								</Form.Group>
 
@@ -129,11 +151,15 @@ class FormEntregador extends React.Component{
                                         fluid
                                         label="Rua"
                                         width={13}
+										value={this.state.enderecoRua}
+										onChange={e => this.setState({enderecoRua: e.target.value})}
                                         />
                                     <Form.Input
                                         fluid
                                         label="Número"
                                         width={4}
+										value={this.state.enderecoNumero}
+										onChange={e => this.setState({enderecoNumero: e.target.value})}
                                         />
                                 </Form.Group>
 
@@ -142,16 +168,22 @@ class FormEntregador extends React.Component{
                                         fluid
                                         label="Bairro"
                                         width={7}
+										value={this.state.enderecoBairro}
+										onChange={e => this.setState({enderecoBairro: e.target.value})}
                                         />
                                     <Form.Input
                                         fluid
                                         label="Cidade"
                                         width={7}
+										value={this.state.enderecoCidade}
+										onChange={e => this.setState({enderecoCidade: e.target.value})}
                                         />
                                     <Form.Input
                                         fluid
                                         label="CEP"
                                         width={3}
+										value={this.state.enderecoCep}
+										onChange={e => this.setState({enderecoCep: e.target.value})}
                                         />
                                 </Form.Group>
 								<Form.Group widths='equal'>								
@@ -160,30 +192,41 @@ class FormEntregador extends React.Component{
 										label='UF'
 										options={options}
 										placeholder='Selecione'
+										value={this.state.enderecoUf}
+										onChange={e => {
+											this.setState({enderecoUf: e.target.value})
+										}}
 									/>
 								</Form.Group>
 
 								<Form.Input
                                         fluid
                                         label="Complemento"
+										value={this.state.enderecoComplemento}
+										onChange={e => this.setState({enderecoComplemento: e.target.value})}
                                         />
 										
 										<Form.Group inline>
 											<label>Ativo:</label>
-											<Form.Field
-												control={Radio}
+											<Form.Radio
+												
 												label='Sim'
 												value='sim'
-												checked={value === 'sim'}
-												onChange={this.handleChange}
+												checked={this.state.ativo}
+												onChange={e => this.setState({
+													ativo: true
+												})}
 											/>
-											<Form.Field
-												control={Radio}
+											<Form.Radio
+												
 												label='Não'
 												value='nao'
-												checked={value === 'nao'}
-												onChange={this.handleChange}
+												checked={!this.state.ativo}
+												onChange={e => this.setState({
+													ativo: false
+												})}
 											/>
+											
 										</Form.Group>
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
