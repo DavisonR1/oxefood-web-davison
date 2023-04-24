@@ -6,7 +6,7 @@ import Rotas from './Rotas';
 function App() {
   return (
     <div className="App">
-       <MenuSistema />
+      <MenuSistema />
       <Rotas />
       
       <div style={{marginTop: '6%'}}>

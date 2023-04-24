@@ -1,7 +1,42 @@
+import axios from "axios";
 import React from "react";
 import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-react';
 
 class FormProduto extends React.Component{
+
+	state = {
+
+		codigo: null,
+		titulo: null,
+		descricao: null,
+		valorUnitario: null,
+		tempoEntregaMinimo: null,
+		tempoEntregaMaximo: null
+	}
+ 
+
+	salvar = () => {
+
+		let produtoRequest = {
+
+			titulo: this.state.titulo,
+			codigo: this.state.codigo,
+			descricao: this.state.descricao,
+			valorUnitario: this.state.valorUnitario,
+			tempoEntregaMinimo: this.state.tempoEntregaMinimo,
+			tempoEntregaMaximo: this.state.tempoEntregaMaximo
+		}
+	
+		axios.post("http://localhost:8082/api/produto", produtoRequest)
+		.then((response) => {
+			console.log('Produto cadastrado com sucesso.')
+		})
+		.catch((error) => {
+			console.log('Erro ao incluir o um produto.')
+		})
+	}
+
+
 
     render(){
         return(
@@ -28,6 +63,8 @@ class FormProduto extends React.Component{
 										label='Título'
 										maxLength="100"
                                         placeholder="Informe o título do produto"
+										value={this.state.titulo}
+										onChange={e => this.setState({titulo: e.target.value})}
 									/>
 
                                     <Form.Input
@@ -36,7 +73,9 @@ class FormProduto extends React.Component{
                                         width={5}
 										label='Código do Produto'
 										maxLength="100"
-                                        placeholder="Informe o código do podruto"
+                                        placeholder="Informe o código do produto"
+										value={this.state.codigo}
+										onChange={e => this.setState({codigo: e.target.value})}
 									/>
                 
 								</Form.Group>
@@ -47,25 +86,36 @@ class FormProduto extends React.Component{
                                         control={TextArea}
                                         label='Descrição'
                                         placeholder='Informe a descrição do produto'
+										value={this.state.descricao}
+										onChange={e => this.setState({descricao: e.target.value})}
                                         />
                                 <Form.Group>
                                     <Form.Input
                                         required
                                         fluid
                                         label='Valor Unitário'
-                                        width={6}/>
+                                        width={6}
+										value={this.state.valorUnitario}
+										onChange={e => this.setState({valorUnitario: e.target.value})}
+										/>
                                      <Form.Input
                                         
                                         fluid
                                         label='Tempo de Entrega Mínimo em Minutos'
                                         width={6}
-                                        placeholder="30"/>
+                                        placeholder="30"
+										value={this.state.tempoEntregaMinimo}
+										onChange={e => this.setState({tempoEntregaMinimo: e.target.value})}
+										/>
                                     <Form.Input
                                         
                                         fluid
                                         label='Tempo de Entrega Máximo em Minutos'
                                         width={6}
-                                        placeholder="40"/>
+                                        placeholder="40"
+										value={this.state.tempoEntregaMaximo}
+										onChange={e => this.setState({tempoEntregaMaximo: e.target.value})}
+										/>
                            
 								</Form.Group>
 

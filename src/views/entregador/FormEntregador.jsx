@@ -1,38 +1,91 @@
+import axios from "axios";
 import React from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon, Select } from 'semantic-ui-react';
 
-const options = [
-	{ key: 'RO', text: 'RO', value: 'RO' },
+const paisesOptions = [
 	{ key: 'AC', text: 'AC', value: 'AC' },
-	{ key: 'AM', text: 'AM', value: 'AM' },
-	{ key: 'RR', text: 'RR', value: 'RR' },
-	{ key: 'PA', text: 'PA', value: 'PA' },
-	{ key: 'AP', text: 'AP', value: 'AP' },
-	{ key: 'TO', text: 'TO', value: 'TO' },
-	{ key: 'MA', text: 'MA', value: 'MA' },
-	{ key: 'PI', text: 'PI', value: 'PI' },
-	{ key: 'RN', text: 'RN', value: 'RN' },
-	{ key: 'PB', text: 'PB', value: 'PB' },
-	{ key: 'PE', text: 'PE', value: 'PE' },
 	{ key: 'AL', text: 'AL', value: 'AL' },
-	{ key: 'SE', text: 'SE', value: 'SE' },
+	{ key: 'AM', text: 'AM', value: 'AM' },
+	{ key: 'AP', text: 'AP', value: 'AP' },
 	{ key: 'BA', text: 'BA', value: 'BA' },
-	{ key: 'MG', text: 'MG', value: 'MG' },
+	{ key: 'DF', text: 'DF', value: 'DF' },
 	{ key: 'ES', text: 'ES', value: 'ES' },
-	{ key: 'RJ', text: 'RJ', value: 'RJ' },
-	{ key: 'SP', text: 'SP', value: 'SP' },
-	{ key: 'PR', text: 'PR', value: 'PR' },
-	{ key: 'SC', text: 'SC', value: 'SC' },
-	{ key: 'RS', text: 'RS', value: 'RS' },
+	{ key: 'GO', text: 'GO', value: 'GO' },
+	{ key: 'MA', text: 'MA', value: 'MA' },
+	{ key: 'MG', text: 'MG', value: 'MG' },
 	{ key: 'MS', text: 'MS', value: 'MS' },
 	{ key: 'MT', text: 'MT', value: 'MT' },
-	{ key: 'GO', text: 'GO', value: 'GO' },
-	{ key: 'DF', text: 'DF', value: 'DF' },
+	{ key: 'PA', text: 'PA', value: 'PA' },
+	{ key: 'PB', text: 'PB', value: 'PB' },
+	{ key: 'PI', text: 'PI', value: 'PI' },
+	{ key: 'PE', text: 'PE', value: 'PE' },
+	{ key: 'PR', text: 'PR', value: 'PR' },
+	{ key: 'RJ', text: 'RJ', value: 'RJ' },
+	{ key: 'RN', text: 'RN', value: 'RN' },
+	{ key: 'RO', text: 'RO', value: 'RO' },
+	{ key: 'RR', text: 'RR', value: 'RR' },
+	{ key: 'RS', text: 'RS', value: 'RS' },
+	{ key: 'SC', text: 'SC', value: 'SC' },
+	{ key: 'SE', text: 'SE', value: 'SE' },
+	{ key: 'SP', text: 'SP', value: 'SP' },
+	{ key: 'TO', text: 'TO', value: 'TO' },
+	
   ]
 
 class FormEntregador extends React.Component{
-	state = {}
+	state = {
+
+		nome: null,
+		cpf: null,
+		rg: null,
+		dataNascimento: null,
+		foneCelular: null,
+		foneFixo: null,
+		qtdEntregasRealizadas: null,
+		valorFrete: null,
+		enderecoRua: null,
+		enderecoNumero: null,
+		enderecoBairro: null,
+		enderecoCidade: null,
+		enderecoCep: null,
+		enderecoUf: null,
+		enderecoComplemento: null,
+		ativo: null
+	}
+ 
+	salvar = () => {
+
+		let entregadorRequest = {
+
+			nome: this.state.nome,
+			cpf: this.state.cpf,
+			rg: this.state.rg,	
+			dataNascimento: this.state.dataNascimento,
+			foneCelular: this.state.foneCelular,
+			foneFixo: this.state.foneFixo,
+			qtdEntregasRealizadas: this.state.qtdEntregasRealizadas,
+			valorFrete: this.state.valorFrete,
+			enderecoRua: this.state.enderecoRua,
+			enderecoNumero: this.state.enderecoNumero,
+			enderecoBairro: this.state.enderecoBairro,
+			enderecoCidade: this.state.enderecoCidade,
+			enderecoCep: this.state.enderecoCep,
+			enderecoUf: this.state.enderecoUf,
+			enderecoComplemento: this.state.enderecoComplemento,
+			ativo: this.state.ativo
+		}
+	
+		axios.post("http://localhost:8082/api/entregador", entregadorRequest)
+		.then((response) => {
+			console.log('Entregador cadastrado com sucesso.')
+		})
+		.catch((error) => {
+			console.log('Erro ao incluir um entregador.')
+		})
+	}
+
+
 
 	handleChange = (e, { value }) => this.setState({ value })
     render(){
@@ -188,13 +241,14 @@ class FormEntregador extends React.Component{
                                 </Form.Group>
 								<Form.Group widths='equal'>								
 									<Form.Field
+										fluid
 										control={Select}
 										label='UF'
-										options={options}
+										options={paisesOptions}
 										placeholder='Selecione'
 										value={this.state.enderecoUf}
-										onChange={e => {
-											this.setState({enderecoUf: e.target.value})
+										onChange={(e,{value}) => {
+											this.setState({enderecoUf: value})
 										}}
 									/>
 								</Form.Group>
