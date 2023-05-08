@@ -42,6 +42,7 @@ carregarLista = () => {
         return dataFormatada
     };
 
+
 render(){
        return(
            <div>
@@ -115,7 +116,8 @@ render(){
                                            <Table.Cell>{entregador.enderecoComplemento}</Table.Cell>
                                            <Table.Cell>{entregador.ativo}</Table.Cell>
                                            <Table.Cell textAlign='center'>
-                                              
+                                            
+                                         
                                                 <Button
                                                    inverted
                                                    circular

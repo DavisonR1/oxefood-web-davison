@@ -1,6 +1,8 @@
 import axios from "axios";
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-react';
+
 
 class FormProduto extends React.Component{
 
@@ -131,7 +133,8 @@ class FormProduto extends React.Component{
 										onClick={this.listar}
 										>
 										<Icon name='reply' />
-										Listar
+										<Link to={'/list-cliente'}>Listar</Link>
+										
 									</Button>
 
 									<Container textAlign='right'>

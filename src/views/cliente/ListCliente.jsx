@@ -100,7 +100,7 @@ render(){
                                                    circular
                                                    icon='edit'
                                                    color='blue'
-                                                   itle='Clique aqui para editar os dados deste cliente' /> &nbsp;
+                                                   title='Clique aqui para editar os dados deste cliente' /> &nbsp;
 <Button
                                                    inverted
                                                    circular
