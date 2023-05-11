@@ -3,6 +3,7 @@ import React from "react";
 import InputMask from 'react-input-mask';
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon, Select } from 'semantic-ui-react';
+import { ENDERECO_SERVIDOR } from '../../util/Contantes';
 
 const paisesOptions = [
 	{ key: 'AC', text: 'AC', value: 'AC' },
@@ -77,7 +78,7 @@ class FormEntregador extends React.Component{
 			ativo: this.state.ativo
 		}
 	
-		axios.post("http://localhost:8082/api/entregador", entregadorRequest)
+		axios.post(ENDERECO_SERVIDOR+"/api/entregador", entregadorRequest)
 		.then((response) => {
 			console.log('Entregador cadastrado com sucesso.')
 		})
