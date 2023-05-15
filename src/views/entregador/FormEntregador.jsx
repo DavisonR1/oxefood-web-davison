@@ -236,10 +236,15 @@ class FormEntregador extends React.Component{
                                     <Form.Input
                                         fluid
                                         label="CEP"
-                                        width={3}
+                                        width={3}>
+										<InputMask 
+										mask="99999-999"
 										value={this.state.enderecoCep}
 										onChange={e => this.setState({enderecoCep: e.target.value})}
-                                        />
+										/> 
+									</Form.Input>
+										
+                                        
                                 </Form.Group>
 								<Form.Group widths='equal'>								
 									<Form.Field
