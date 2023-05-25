@@ -109,7 +109,7 @@ class FormCupomDesconto extends React.Component{
                                     <Form.Input
                                         fluid
                                         label='Data Incial'
-                                        width={4}
+                                        width={4} 
 										>
                                         <InputMask 
                                             mask="99/99/9999" 
