@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Header, Icon, Menu, Modal, Segment, Table } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Contantes';
 import { notifyError, notifySuccess } from '../../util/Util';
 
@@ -10,7 +10,13 @@ class ListProduto extends React.Component {
     state = {
         openModal: false,
         idRemover: null,
-        listaProdutos: []
+        listaProdutos: [],
+        menuFiltro: false,
+        codigo: '',
+        titulo: '',
+        idCategoria: '',
+        listaCategoriaProduto: []
+ 
 
     }
 
@@ -68,8 +74,61 @@ class ListProduto extends React.Component {
                     listaProdutos: response.data
                 })
             })
+        axios.get(ENDERECO_SERVIDOR + "/api/categoriaproduto")
+            .then((response) => {
+     
+                const dropDownCategorias = [];
+                dropDownCategorias.push({ text: '', value: '' });
+                response.data.map(c => (
+                    dropDownCategorias.push({ text: c.descricao, value: c.id })
+                ))
+             
+                this.setState({
+                    listaCategoriaProduto: dropDownCategorias
+                })
+            })
 
     };
+
+    handleMenuFiltro = () => {
+        this.state.menuFiltro === true ? this.setState({menuFiltro: false}) : this.setState({menuFiltro: true})
+    }
+ 
+    handleChangeCodigo = (e, {value}) => {
+        this.setState({
+            codigo: value
+        }, () => this.filtrarProdutos())
+    }
+ 
+    handleChangeTitulo = (e, {value}) => {
+        this.setState({
+            titulo: value
+        }, () => this.filtrarProdutos())
+    }
+ 
+    handleChangeCategoriaProduto = (e, { value }) => {
+        this.setState({
+            idCategoria: value,
+        }, () => this.filtrarProdutos())
+    }
+
+    filtrarProdutos = () => {
+
+        let formData = new FormData();
+ 
+        formData.append('codigo', this.state.codigo);
+        formData.append('titulo', this.state.titulo);
+        formData.append('idCategoria', this.state.idCategoria);
+ 
+        axios.post(ENDERECO_SERVIDOR + "/api/produto/filtrar", formData)
+        .then((response) => {
+            this.setState({
+                listaProdutos: response.data
+            })
+        })
+   
+    }
+ 
 
     formatarData = (dataParam) => {
 
@@ -98,6 +157,18 @@ class ListProduto extends React.Component {
 
                         <div style={{ marginTop: '4%' }}>
 
+                        <Menu compact>
+                               <Menu.Item
+                                   name='menuFiltro'
+                                   active={this.state.menuFiltro === true}
+                                   onClick={this.handleMenuFiltro}
+                               >
+                                   <Icon name='filter' />
+                                   Filtrar
+                               </Menu.Item>
+                           </Menu>
+
+
                             <Button
                                 inverted
                                 circular
@@ -109,6 +180,41 @@ class ListProduto extends React.Component {
                                 <Icon name='clipboard outline' />
                                 <Link to={'/form-produto'}>Novo</Link>
                             </Button>
+
+                            { this.state.menuFiltro ?
+                                <Segment>
+                                    <Form className="form-filtros">
+                                        <Form.Input
+                                            icon="search"
+                                            value={this.state.codigo}
+                                            onChange={this.handleChangeCodigo}
+                                            label='Código do Produto'
+                                            placeholder='Filtrar por Código do Produto'
+                                            labelPosition='left'
+                                            width={4}
+                                        />
+                                        <Form.Group widths='equal'>
+                                            <Form.Input
+                                            icon="search"
+                                            value={this.state.titulo}
+                                            onChange={this.handleChangeTitulo}
+                                            label='Título'
+                                            placeholder='Filtrar por título'
+                                            labelPosition='left'
+                                            />                              
+                                            <Form.Select
+                                            placeholder='Filtrar por Categoria'
+                                            label='Categoria'
+                                            options={this.state.listaCategoriaProduto}
+                                            value={this.state.idCategoria}
+                                            onChange={this.handleChangeCategoriaProduto}
+                                            /> 
+                                        </Form.Group>
+                                    </Form>
+                                </Segment>:""
+                                }
+
+
                             <br /><br /><br />
 
                             <Table color='orange' sortable celled>
